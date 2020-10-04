@@ -1,0 +1,63 @@
+
+import { createGlobalStyle } from 'styled-components'
+
+export const GlobalStyle = createGlobalStyle`
+	body {
+		box-sizing: border-box;
+	}
+	*,
+	*::before,
+	*::after {
+		box-sizing: inherit;
+	}
+	body {
+		margin: 0;
+		background-color: #f0f0f0;
+		font-family: 'Oswald', sans-serif;
+		font-size: 20px;
+		color: #86786F;		
+	}
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	h1, h2, h3 {
+		padding: 0;
+		margin: 0;
+		font-family: 'Oswald', sans-serif;
+	
+	}
+	p {
+		margin: 0;
+		padding: 0;
+	}
+
+	input {
+		padding: 0 10px;
+		&:focus {
+			outline: none;
+		}
+	}
+
+	input[type="number"] {
+		-moz-appearance: textfield;
+	}
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+	}
+
+	button {
+        cursor: pointer;
+        font-family: 'Oswald', sans-serif;
+	&:focus {
+		outline: none;
+	}
+	}
+`
