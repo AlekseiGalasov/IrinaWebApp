@@ -6,5 +6,7 @@ export const Button = styled.button`
     height: 40px;
     font-size: 24px;
     color: rgb(134, 120, 111);
-    margin: 0 22.5px;
+    margin: ${props => props.authBtn ? '15px 0' : '0 22.5px'};
+    position: ${props => props.authBtn ? 'absolute' : ''};
+    bottom: 10px;
 `;

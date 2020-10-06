@@ -5,11 +5,13 @@ import { OrderListItem } from './OrderListItem.js'
 import { Total } from '../Styles/Total'
 import { OrderTitle } from '../Styles/OrderTitle'
 import { device } from '../Styles/Devices'
+import { totalPriceItems } from '../Functions/secondaryFunctions'
+import { formatCurrency } from '../Functions/secondaryFunctions'
 
 const OrderStyled = styled.div`
     position:fixed;
     top: 80px;
-    height: calc(100% - 80px);
+    height: calc(100% - 160px);
     left: 0;
     padding:20px;
     width: 380px;
@@ -60,22 +62,36 @@ const EmptyList = styled.p`
 `;
 
 
-export const Order = () => {
+export const Order = ({orders, setOrders , setTimeModal}) => {
+
+
+    const deleteItem = index => {
+        const newOrders = [...orders];
+        newOrders.splice(index, 1)
+        setOrders(newOrders);
+    }
 
     return(
     <OrderStyled>
         <OrderTitle>ВАШ ЗАКАЗ</OrderTitle>
         <OrderContent>
+        {orders.length ? 
             <OrderList> 
-                <OrderListItem/>
-            </OrderList>
-            <EmptyList>Список заказов пуст!</EmptyList>
+                {orders.map((order, index) => <OrderListItem
+                key={index}
+                order={order}
+                index={index}
+                deleteItem={deleteItem}
+                 />)}
+            </OrderList> :
+            <EmptyList>Список заказов пуст!</EmptyList>}
         </OrderContent>
-        
+        {orders.length ? 
+        <>
         <Total>
             <span>Конечная сумма</span>
-            <span>25квро</span>
+            <span>{formatCurrency(totalPriceItems(orders))}</span>
         </Total>
-        <Button>Оформить</Button>
+        <Button onClick={() => setTimeModal(true)}>Оформить</Button></> : null}
     </OrderStyled>
 )};

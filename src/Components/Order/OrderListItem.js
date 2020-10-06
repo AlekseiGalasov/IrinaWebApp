@@ -1,8 +1,9 @@
 
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import trashImage from '../../images/trash.svg'
 import { device } from '../Styles/Devices'
+import { formatCurrency } from '../Functions/secondaryFunctions'
 
 const OrderItemStyled = styled.li`
     display: flex;
@@ -63,17 +64,18 @@ const ToppingItem = styled.div`
 `;
 
 
-export const OrderListItem = () => {
+export const OrderListItem = ({order, index, deleteItem, setOpenItem}) => {
 
+    const refDeleteButton = useRef(null);
     return(
         <>
         <OrderItemStyled>
-            <ItemName>Депиляция</ItemName>
-            <ItemPrice>35евро</ItemPrice>
-            <TrashButton></TrashButton>
+            <ItemName>{order.name} </ItemName>
+            <ItemPrice>{formatCurrency(order.price)}</ItemPrice>
+            <TrashButton ref={refDeleteButton} onClick={() => deleteItem(index)}></TrashButton>
         </OrderItemStyled>
         <ToppingsWrap>
-            <ToppingItem>Выбор: Такой то</ToppingItem>
+            {order.choice && <ToppingItem>Выбор: {order.choice}</ToppingItem>}
         </ToppingsWrap>
         </>
     )

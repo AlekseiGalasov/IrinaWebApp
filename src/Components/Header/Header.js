@@ -20,6 +20,7 @@ const Img = styled.img`
     width: 40px;
     height: 40px;
     margin: 0 22.5px;
+    cursor: pointer;
 `;
 
 
@@ -34,17 +35,17 @@ const BtnContainer  = styled.div`
     margin-right: 25px;
 `;
 
-export const Header = () => {
+export const Header = ({auth, setAuthModal, setOpenOrderFilter}) => {
 
     return (
     <HeaderWrap>
         <ImgContainer>
-            <Img alt='basket' src={basket}></Img>
-            <Img alt='basket' src={filter}></Img>
+            <Img onClick={() => setOpenOrderFilter('order')} alt='basket' src={basket}></Img>
+            <Img onClick={() => setOpenOrderFilter('filter')} alt='basket' src={filter}></Img>
         </ImgContainer>
         <BtnContainer>
-            <Button>Регистрация</Button>
-            <Button>Войти</Button>
+            <Button onClick={() => setAuthModal('login')}>Регистрация</Button>
+            <Button onClick={() => setAuthModal('logon')}>Войти</Button>
         </BtnContainer>
     </HeaderWrap>
     )
