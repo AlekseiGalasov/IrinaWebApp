@@ -1,4 +1,6 @@
 import React from 'react';
+import firebase from 'firebase/app'
+import 'firebase/database';
 import { GlobalStyle } from './Components/Styles/GlobalStyle.js';
 import { Header } from './Components/Header/Header'
 import { Order } from './Components/Order/Order'
@@ -8,6 +10,7 @@ import { AuthModals } from './Components/Modals/AuthModals'
 import { Footer } from './Components/Footer/Footer'
 import { ChooseTimeModal } from './Components/Modals/ChooseTimeModal'
 import { Filter } from './Components/Filter/Filter'
+import { useDB } from './Components/Hooks/useDB'
 /** HOOKS */
 
 import { useOpenItem } from './Components/Hooks/useOpenItem';
@@ -29,6 +32,7 @@ const firebaseConfig = {
     measurementId: "G-D1T7R9K2CR"
   };
 
+firebase.initializeApp(firebaseConfig)
 
 function App() {
 
@@ -38,12 +42,15 @@ function App() {
     const auth = useAuthModal();
     const openTimeModal = useOpenTimeModal();
     const openOrderFilter = useOpenOrderFilter();
+    const database = firebase.database();
+    const dbMenu = useDB(database)
+
 return (
     <React.Fragment>
         <GlobalStyle />
         <Header {...auth} {...openOrderFilter}></Header>
         {openOrderFilter.openOrderFilter === 'order' ? <Order {...orders} {...openTimeModal}></Order> : <Filter></Filter>}
-        <Menu {...openItem} {...orders}></Menu>
+        <Menu {...openItem} {...orders} dbMenu={dbMenu}></Menu>
         {openItem.openItem && <ChoiseModal {...openItem} {...choices} {...orders}></ChoiseModal>}
         {auth.auth && <AuthModals {...auth}/>}
         {openTimeModal.timeModal && <ChooseTimeModal {...openTimeModal}/>}

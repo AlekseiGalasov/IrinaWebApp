@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { ListItem } from './ListItem.js';
 import { device } from '../Styles/Devices'
-import dbmenu from '../dbMenu'
 import { MenuStyled } from '../Styles/MenuStyled'
-
+import { Preloader } from './Preloadler'
 
 const SectionMenu = styled.section`
     padding: 30px;
@@ -19,16 +18,18 @@ const SectionMenu = styled.section`
     }
 `
 
-export const Menu = ({openItem, setOpenItem, orders, setOrders}) => {
+export const Menu = ({openItem, setOpenItem, orders, setOrders, dbMenu}) => {
 
-    
+    console.log(dbMenu);
 
     return(
     <MenuStyled>
+            {dbMenu ?
+            <>
             <SectionMenu>
                 <h2>Комплекты</h2>
                 <ListItem
-                    itemList={dbmenu.specials}
+                    itemList={dbMenu.specials}
                     setOpenItem={setOpenItem}
                     orders={orders}
                     setOrders={setOrders}
@@ -37,7 +38,7 @@ export const Menu = ({openItem, setOpenItem, orders, setOrders}) => {
             <SectionMenu>
                 <h2>Депиляция для Женщин</h2>
                 <ListItem
-                    itemList={dbmenu.woman}
+                    itemList={dbMenu.woman}
                     setOpenItem={setOpenItem}
                     orders={orders}
                     setOrders={setOrders}
@@ -46,11 +47,13 @@ export const Menu = ({openItem, setOpenItem, orders, setOrders}) => {
             <SectionMenu>
                 <h2>Депиляция для мужчин</h2>
                 <ListItem
-                    itemList={dbmenu.man}
+                    itemList={dbMenu.man}
                     setOpenItem={setOpenItem}
                     orders={orders}
                     setOrders={setOrders}
                 ></ListItem>
             </SectionMenu>
+            </>
+            : Preloader()}
     </MenuStyled>
 )};
