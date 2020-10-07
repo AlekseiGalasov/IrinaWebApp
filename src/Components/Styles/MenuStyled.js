@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { device } from '../Styles/Devices'
 
 export const MenuStyled = styled.main`
-    padding-top: 80px;
+    margin-top: 80px;
     margin-left: 380px;
     height: calc(100% - 160px);
     @media ${device.laptopL} {

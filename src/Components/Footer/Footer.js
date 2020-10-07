@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import gmail from '../../images/gmail.svg';
 import instagram from '../../images/instagram.svg';
 import facebook from '../../images/facebook.svg'
+import { device } from '../Styles/Devices'
 
 const FooterWrap = styled.header`
     position: fixed;
@@ -15,6 +16,9 @@ const FooterWrap = styled.header`
     align-items: center;
     justify-content: center;
     z-index: 10;
+    @media ${device.tablet} {
+        position: relative;
+    }
 `;
 
 const Img = styled.img`

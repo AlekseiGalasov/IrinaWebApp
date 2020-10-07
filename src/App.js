@@ -17,6 +17,19 @@ import { useAuthModal } from './Components/Hooks/authentification/useAuthModal'
 import { useOpenTimeModal } from './Components/Hooks/chooseTime/useOpenTimeModal'
 import { useOpenOrderFilter } from './Components/Hooks/useOpenOrderFilter'
 
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBhuocMuUloXZnBixGfR1V1yxLt4QQLRjc",
+    authDomain: "irinawebapp.firebaseapp.com",
+    databaseURL: "https://irinawebapp.firebaseio.com",
+    projectId: "irinawebapp",
+    storageBucket: "irinawebapp.appspot.com",
+    messagingSenderId: "303972611653",
+    appId: "1:303972611653:web:81125605802fa627ef552c",
+    measurementId: "G-D1T7R9K2CR"
+  };
+
+
 function App() {
 
     const openItem = useOpenItem();
@@ -28,7 +41,7 @@ function App() {
 return (
     <React.Fragment>
         <GlobalStyle />
-        <Header {...auth} setOpenOrderFilter={openOrderFilter.setOpenOrderFilter}></Header>
+        <Header {...auth} {...openOrderFilter}></Header>
         {openOrderFilter.openOrderFilter === 'order' ? <Order {...orders} {...openTimeModal}></Order> : <Filter></Filter>}
         <Menu {...openItem} {...orders}></Menu>
         {openItem.openItem && <ChoiseModal {...openItem} {...choices} {...orders}></ChoiseModal>}

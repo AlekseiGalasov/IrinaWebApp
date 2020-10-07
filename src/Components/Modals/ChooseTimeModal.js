@@ -33,25 +33,25 @@ export const ChooseTimeModal = ({setTimeModal}) => {
             <Modal>
                 <CloseBtn><Img onClick={CloseModal} id='CloseBtn' alt='close' src={Close}></Img></CloseBtn>
                 <H2>Выбор места и время</H2>
-                <Label for="place">Место</Label>
+                <Label htmlFor="place">Место</Label>
                     <Select name="place" id="place">
                         <option value="onePlace">One place</option>
                         <option disabled value="secondPlace">Second place</option>
                         <option value="thirdPlace">Third place</option>
                     </Select>
-                <Label for="day">Февраль</Label>
+                <Label htmlFor="day">Февраль</Label>
                     <Select name="day" id="day">
                         <option value="onePlace">One place</option>
                         <option disabled value="secondPlace">Second place</option>
                         <option value="thirdPlace">Third place</option>
                     </Select>
-                <Label for="hour">Час</Label>
+                <Label htmlFor="hour">Час</Label>
                     <Select name="hour" id="hour">
                         <option value="onePlace">One place</option>
                         <option disabled value="secondPlace">Second place</option>
                         <option value="thirdPlace">Third place</option>
                     </Select>
-                <Label for="min">Минуты</Label>
+                <Label htmlFor="min">Минуты</Label>
                     <Select name="min" id="min">
                         <option value="5">5</option>
                         <option disabled value="10">10</option>

@@ -12,7 +12,7 @@ export const OverLay = styled.div`
     width:100%;
     height:100%;
     background-color: rgba(0 ,0 ,0 , .5);
-    z-index: 20;
+    z-index: 130;
 `
 
 export const Modal = styled.div`
@@ -24,13 +24,10 @@ export const Modal = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
-    @media ${device.laptopL} {
-        width: 550px;
-        height: 500px;
-    }
+
     @media ${device.tablet} {
-        width: 90%;
-        height: 400px;
+        width: 60%;
+        height: 420px;
     }
     
 `
@@ -55,21 +52,44 @@ export const CloseBtn = styled.div`
         background-color: rgb(186,191,16);
         border: 1px solid white;
     }
+    @media ${device.mobileL} {
+        right: 5px;
+        top: 5px;
+        width: 25px;
+        height: 25px;
+    }
 `
 
 export const H2 = styled.h2`
-font-size: 30px;
-margin-top: 15px;
+    font-size: 30px;
+    margin-top: 15px;
+    @media ${device.tablet} {
+        font-size: 25px;
+        margin-top: 10px;
+    }
+    @media ${device.mobileL} {
+        font-size: 22px;
+        margin-top: 10px;
+    }
 `;
 
 
 export const Img = styled.img`
-width: 40px;
+    width: 40px;
+    @media ${device.mobileL} {
+        width: 25px;
+    }
 `;
 
 export const Label = styled.label`
-display: flex;
-align-items: center;
-flex-direction: column;
-font-size: 24px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 24px;
+    @media ${device.tablet} {
+        font-size: 21px;
+    }
+    @media ${device.mobileL} {
+        font-size: 18px;
+    }
 `;

@@ -60,4 +60,7 @@ export const GlobalStyle = createGlobalStyle`
 		outline: none;
 	}
 	}
+	select > option:disabled {
+		color: rgb(223,223,223)
+	}
 `

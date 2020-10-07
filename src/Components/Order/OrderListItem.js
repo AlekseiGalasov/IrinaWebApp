@@ -8,6 +8,7 @@ import { formatCurrency } from '../Functions/secondaryFunctions'
 const OrderItemStyled = styled.li`
     display: flex;
     margin: 5px 0;
+    font-size: 16px;
     @media ${device.laptop} {
         font-size: 14px;
         line-height: 25px;
@@ -34,10 +35,13 @@ const TrashButton = styled.button`
 
 const ItemName = styled.span`
     flex-grow: 1;
+
 `;
 
 const ItemPrice = styled.span`
     margin: 0 20px;
+    display: flex;
+    align-self: center;
 `;
 
 const ToppingsWrap = styled.div`
@@ -50,7 +54,6 @@ const ToppingsWrap = styled.div`
 const ToppingItem = styled.div`
     padding: 5px;
     font-size: 12px;
-    font-family: 'Balsamiq Sans', cursive;
     color: #9A9A9A;
 
     @media ${device.laptop} {
