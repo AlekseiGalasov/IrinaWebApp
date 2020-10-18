@@ -12,3 +12,18 @@ export const totalPriceItems = (order) => {
         return prices.reduce(reducer)
     }
 }
+
+export const MonthName = (fulldate) => {
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  return monthNames[fulldate.getMonth()]
+  }
+
+
+export const getLastDayOfMonth = (year, month) => {
+    let date = new Date(year, month + 1, 0);
+    return date.getDate();
+  }
+
+

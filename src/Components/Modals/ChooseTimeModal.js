@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import {OverLay, Modal, CloseBtn, H2, Img, Label } from '../Styles/Overlay_Modal'
 import Close from '../../images/close.svg'
 
-
 const Select = styled.select`
 padding: 10px;
 width: 150px;
@@ -22,40 +21,46 @@ letter-spacing: 1.1px;
 `;
 
 
-export const ChooseTimeModal = ({setTimeModal}) => {
+export const ChooseTimeModal = ({setTimeModal, workdays, useGetMonth, month, useGetDay, days, useGetHours, hours, path, min, useGetMin}) => {
     const CloseModal = e => {
         if(e.target.id === 'OverLay' || e.target.id === 'CloseBtn') {
             setTimeModal(false);;
         }
     }
+    console.log('path', path);
+
     return(
         <OverLay onClick={CloseModal} id='OverLay'>
             <Modal>
                 <CloseBtn><Img onClick={CloseModal} id='CloseBtn' alt='close' src={Close}></Img></CloseBtn>
                 <H2>Выбор места и время</H2>
                 <Label htmlFor="place">Место</Label>
-                    <Select name="place" id="place">
-                        <option value="onePlace">One place</option>
-                        <option disabled value="secondPlace">Second place</option>
-                        <option value="thirdPlace">Third place</option>
+                    <Select onChange={useGetMonth} name="place" id="place">
+                        {Object.keys(workdays).map((place, index) => (
+                            <option key={index} value={place}>{place}</option>
+                        ))}
                     </Select>
-                <Label htmlFor="day">Февраль</Label>
-                    <Select name="day" id="day">
-                        <option value="onePlace">One place</option>
-                        <option disabled value="secondPlace">Second place</option>
-                        <option value="thirdPlace">Third place</option>
+                <Label htmlFor="month">Месяц</Label>
+                    <Select onChange={useGetDay} name="month" id="month">
+                        {month ? Object.keys(month).map((item, index) => (
+                            <option key={index} value={item}>{item}</option>
+                        )) : <option>Choose place</option>}
+                    </Select>
+                <Label htmlFor="days">День</Label>
+                    <Select onChange={useGetHours} name="days" id="days">
+                        {days ? Object.keys(days).map((item, index) => (
+                            <option key={index} value={item}>{item}</option>
+                        )) : <option>Choose month</option>}
                     </Select>
                 <Label htmlFor="hour">Час</Label>
-                    <Select name="hour" id="hour">
-                        <option value="onePlace">One place</option>
-                        <option disabled value="secondPlace">Second place</option>
-                        <option value="thirdPlace">Third place</option>
+                    <Select onChange={useGetMin} name="hour" id="hour">
+                    {hours ? Object.keys(hours.hours).map((item, index) => (
+                            <option key={index} value={index}>{item}</option>
+                    )) : <option>Choose day</option>}
                     </Select>
                 <Label htmlFor="min">Минуты</Label>
                     <Select name="min" id="min">
-                        <option value="5">5</option>
-                        <option disabled value="10">10</option>
-                        <option value="15">15</option>
+                    { console.log(min)}
                     </Select>
             </Modal>
         </OverLay>

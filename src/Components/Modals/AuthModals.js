@@ -4,6 +4,8 @@ import {OverLay, Modal, CloseBtn, Img, Label, H2} from '../Styles/Overlay_Modal'
 import { Button } from '../Styles/Button'
 import Close from '../../images/close.svg'
 import { device } from '../Styles/Devices'
+import { useDates } from '../../Hooks/authentification/useDates'
+
 
 const Input = styled.input`
     padding: 10px;
@@ -28,16 +30,20 @@ const Input = styled.input`
             }
         `;
 
+const Span = styled.span`
+		font-family: 'Oswald', sans-serif;
+`;
 
 
 
-
-export const AuthModals = ({auth, setAuthModal}) => {
+export const AuthModals = ({auth, setAuthModal, err, logIn, logOn}) => {
     const CloseModal = e => {
         if(e.target.id === 'OverLay' || e.target.id === 'CloseBtn') {
             return setAuthModal(false);
         }
     }
+
+    const dates = useDates()
 
     if(auth === 'login') {
     return(
@@ -47,21 +53,22 @@ export const AuthModals = ({auth, setAuthModal}) => {
                     <H2>Регистрация</H2>
                     <Label>
                         Емаил
-                        <Input  name='email' type='email' placeholder='example@gmail.com'></Input>
+                        <Input onChange={dates.changeDates} name='email' type='email' placeholder='example@gmail.com'></Input>
                     </Label>
                     <Label>
                         Пароль
-                        <Input  name='password' type='password' placeholder='*****'></Input>
+                        <Input onChange={dates.changeDates} name='password' type='password' placeholder='*****'></Input>
                     </Label>
                     <Label>
                         Имя, Фамилия
-                        <Input  name='name' type='input' placeholder='Amelia Clark'></Input>
+                        <Input onChange={dates.changeDates} name='name' type='input' placeholder='Amelia Clark'></Input>
                     </Label>
                     <Label>
                         Телефон
-                        <Input name='phone' type='phone' placeholder='12345678'></Input>
+                        <Input onChange={dates.changeDates} name='phone' type='phone' placeholder='12345678'></Input>
                     </Label>
-                    <Button authBtn>Подтвердить</Button>
+                    <Button onClick={() => logIn(dates.email, dates.password, dates.name, dates.phone, setAuthModal)}>Submit</Button>
+                    {err && <Span>{err}</Span>}
                     
             </Modal>
         </OverLay>
@@ -74,13 +81,14 @@ export const AuthModals = ({auth, setAuthModal}) => {
                     <H2 logon>Вход</H2>
                     <Label>
                         Емаил
-                        <Input  name='email' type='email' placeholder='example@gmail.com'></Input>
+                        <Input onChange={dates.changeDates} name='email' type='email' placeholder='example@gmail.com'></Input>
                     </Label>
                     <Label>
                         Пароль
-                        <Input  name='password' type='password'></Input>
+                        <Input onChange={dates.changeDates} name='password' type='password'></Input>
                     </Label>
-                    <Button authBtn>Войти</Button>
+                    <Button onClick={() => logOn(dates.email, dates.password, setAuthModal)}>Submit</Button>
+                    {err && <Span>{err}</Span>}
             </Modal>
         </OverLay>
         )

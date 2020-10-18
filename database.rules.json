@@ -1,7 +1,6 @@
 {
   "rules": {
-    "goods": {
-      ".read": true
-    }
+    ".read": true,
+    ".write": true
   }
 }

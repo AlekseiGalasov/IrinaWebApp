@@ -20,7 +20,6 @@ const SectionMenu = styled.section`
 
 export const Menu = ({openItem, setOpenItem, orders, setOrders, dbMenu}) => {
 
-    console.log(dbMenu);
 
     return(
     <MenuStyled>

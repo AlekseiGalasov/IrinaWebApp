@@ -51,7 +51,7 @@ const BtnContainer  = styled.div`
     margin-right: 25px;
 `;
 
-export const Header = ({auth, setAuthModal, setOpenOrderFilter}) => {
+export const Header = ({auth, setAuthModal, setOpenOrderFilter, authentication, LogOut, setOpenUserMenu, openUserMenu, SetOpenDate}) => {
 
     return (
     <HeaderWrap>
@@ -65,10 +65,22 @@ export const Header = ({auth, setAuthModal, setOpenOrderFilter}) => {
             <span>Фильтры</span>
             </ImgBlock>
         </ImgContainer>
+        {authentication ?
+        <BtnContainer>
+            { openUserMenu === 'offers' 
+            ?
+            <Button onClick={() => setOpenUserMenu('profile')}>{authentication.displayName}</Button>
+            :
+            <Button onClick={() => setOpenUserMenu('offers')}>Главная</Button>
+            }
+            <Button onClick={LogOut}>Выйти</Button>  
+        </BtnContainer>
+        :
         <BtnContainer>
             <Button onClick={() => setAuthModal('login')}>Регистрация</Button>
             <Button onClick={() => setAuthModal('logon')}>Войти</Button>
         </BtnContainer>
+        }
     </HeaderWrap>
     )
 }

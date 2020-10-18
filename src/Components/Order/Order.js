@@ -62,7 +62,7 @@ const EmptyList = styled.p`
 `;
 
 
-export const Order = ({orders, setOrders , setTimeModal}) => {
+export const Order = ({orders, setOrders , setTimeModal, authentication, setAuthModal}) => {
 
 
     const deleteItem = index => {
@@ -92,6 +92,7 @@ export const Order = ({orders, setOrders , setTimeModal}) => {
             <span>Конечная сумма</span>
             <span>{formatCurrency(totalPriceItems(orders))}</span>
         </Total>
-        <Button onClick={() => setTimeModal(true)}>Оформить</Button></> : null}
+        <Button onClick={() => authentication ? orders.length > 0 ? setTimeModal(true) : alert('Сперва выберите хоть 1 товар') : setAuthModal('logon')}>Оформить</Button>
+        </> : null}
     </OrderStyled>
 )};
