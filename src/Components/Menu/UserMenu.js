@@ -5,8 +5,12 @@ import { MenuStyled } from '../Styles/MenuStyled'
 import {MonthName, getLastDayOfMonth} from '../Functions/secondaryFunctions'
 import firebase from 'firebase/app'
 import 'firebase/database';
+import { Select } from '../Styles/Select'
+import { Label } from '../Styles/Overlay_Modal'
+import {Button} from '../Menu/ListItem'
 
 const SectionMenu = styled.section`
+    width: 50%;
     padding: 30px;
     @media ${device.laptopL} {
         padding: 15px;
@@ -20,8 +24,9 @@ const SectionMenu = styled.section`
 `
 
 const H4 = styled.h4`
-    color: white;
+    color: #86786F;
     min-width: 80px;
+    font-size: 28px;
     text-align: center;
     text-transform: uppercase;
 `;
@@ -51,10 +56,19 @@ const Prev = styled.div`
 const SelectMonth = styled.div`
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
 `;
 
-export const UserMenu = ({authentication, clients, SetOpenDate, OpenDate, date, fromTime, place, toTime, changeDates}) => {
+const Form = styled.form`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+`;
+
+export const UserMenu = ({authentication, clients, SetOpenDate, OpenDate, date, fromTime, place, toTime, changeDates, ConfirmWorkDay , setConfirmWorkDay}) => {
+
 
 
     if(authentication && clients) {
@@ -73,7 +87,7 @@ export const UserMenu = ({authentication, clients, SetOpenDate, OpenDate, date, 
                         hoursArr.push(i)   
                     }
                 
-                const month = OpenDate.getFullYear() + '/' + MonthName(OpenDate) + '/' + date
+                const month = MonthName(OpenDate) + '-' + OpenDate.getFullYear() + '/' + date
 
 
                 if(fromTime && toTime) {
@@ -86,15 +100,23 @@ export const UserMenu = ({authentication, clients, SetOpenDate, OpenDate, date, 
                 // console.log('date', date);
                 // console.log('fromtime' , fromTime);
                 // console.log('toTime', toTime);
-                // console.log('Month', month);
+                // console.log('month', month);
                 // console.log('min', min);
                 // console.log('workHours', workHours);
 
                 const dataBase = firebase.database();
+                // eslint-disable-next-line no-loop-func
                 const addWorkTime = () => {
-                    dataBase.ref('workdays/'+ place + '/' + month).set({
-                        hours: workHours,
-                    })};
+                    try {
+                        dataBase.ref('workdays/'+ place + '/' + month).set({
+                            hours: workHours,
+                        })
+                        setConfirmWorkDay(true);
+                    }
+                    catch {
+                        
+                    }
+                    };
 
         return(
             <MenuStyled>
@@ -104,38 +126,45 @@ export const UserMenu = ({authentication, clients, SetOpenDate, OpenDate, date, 
                         <H4>{MonthName(OpenDate)}</H4>
                     <Next onClick={() => SetOpenDate(new Date(OpenDate.setMonth(OpenDate.getMonth()+1)))}></Next>
                 </SelectMonth>
-                <select name="day" onChange={changeDates}>
-            {daysArr.map((elem, index) => (
-                <option
-                    key={index}
-                    value={elem}>
-                    {index + 1}
-                </option>
-            ))}   
-        </select>
-        <select name="fromTime" onChange={changeDates}>
-            {hoursArr.map((elem, index) => (
-                <option
-                    key={index}
-                    value={elem}>
-                    {elem}
-                </option>
-            ))}   
-        </select>
-        <select name="toTime" onChange={changeDates}>
-            {hoursArr.map((elem, index) => (
-                <option
-                    key={index}
-                    value={elem}>
-                    {elem}
-                </option>
-            ))}   
-        </select>
-        <select name="place" onChange={changeDates}>
-                <option key='1' value={"MahtraTee18"}>Mahtra tee 18</option>
-                <option key='2'  value={"MahtraTee45"}>Mahtra tee 45</option> 
-        </select>
-        <button disabled={!date || !fromTime || !toTime} onClick={ () => addWorkTime()}>Готово!</button>
+                <Form>
+                    <Label htmlFor="day">Рабочий день</Label>
+                    <Select name="day" onChange={changeDates}>
+                    {daysArr.map((elem, index) => (
+                        <option
+                            key={index}
+                            value={elem}>
+                            {index + 1}
+                        </option>
+                        ))}   
+                    </Select>
+                    <Label htmlFor="fromTime">Со скольки</Label>
+                    <Select name="fromTime" onChange={changeDates}>
+                    {hoursArr.map((elem, index) => (
+                        <option
+                            key={index}
+                            value={elem}>
+                            {elem}
+                        </option>
+                        ))}   
+                    </Select>
+                    <Label htmlFor="toTime">До скольки</Label>
+                    <Select name="toTime" onChange={changeDates}>
+                    {hoursArr.map((elem, index) => (
+                        <option
+                            key={index}
+                            value={elem}>
+                            {elem}
+                        </option>
+                        ))}   
+                    </Select>
+                    <Label htmlFor="place">Место работы</Label>
+                    <Select name="place" onChange={changeDates}>
+                            <option key='1' value={"MahtraTee18"}>Mahtra tee 18</option>
+                            <option key='2'  value={"MahtraTee45"}>Mahtra tee 45</option> 
+                    </Select>
+                    <Button addWorkDay disabled={!date || !fromTime || !toTime || !place} onClick={ () => addWorkTime()}>Готово!</Button>
+                    { ConfirmWorkDay ? <div>Рабочий день успешно добавлен</div> : null}
+                </Form>
                 </SectionMenu>
             </MenuStyled>
             )

@@ -1,33 +1,92 @@
 import React from 'react'
-import styled from 'styled-components'
 import {OverLay, Modal, CloseBtn, H2, Img, Label } from '../Styles/Overlay_Modal'
 import Close from '../../images/close.svg'
-
-const Select = styled.select`
-padding: 10px;
-width: 150px;
-margin: 3px 0;
-box-shadow: rgba(0, 0, 0, 0.25) 3px 4px 5px;
-background-color: rgba(255, 255, 255, 0.7);
-font-family: 'Oswald', sans-serif;
-border: none;
-outline: none;
-transition: 0.5s;
-color: #86786F;
-letter-spacing: 1.1px;
-&:focus {
-    box-shadow: rgba(223,223,223,0.55) 10px 5px 15px;
-}
-`;
+import {Button} from '../Styles/Button'
+import {Select} from '../Styles/Select'
 
 
-export const ChooseTimeModal = ({setTimeModal, workdays, useGetMonth, month, useGetDay, days, useGetHours, hours, path, min, useGetMin}) => {
+export const ChooseTimeModal = (
+    {   authentication,
+        clients, 
+        setTimeModal,
+        database,
+        workdays, 
+        workMonth,
+        workDay,
+        useGetMonth,
+        month,
+        useGetDay,
+        useSetMin,
+        workPlace,
+        days,
+        useGetHours,
+        hours,
+        orders,
+        min,
+        selectedHour,
+        selectedMin,
+        useGetMin
+    }) => {
     const CloseModal = e => {
         if(e.target.id === 'OverLay' || e.target.id === 'CloseBtn') {
             setTimeModal(false);;
         }
     }
-    console.log('path', path);
+
+    const Disabled = (item) => {
+        const dbRef = database.ref('Orders/' + workPlace + '/' + workMonth + '/' + workDay)
+        dbRef.on('value', snapshot => {
+            for (let key in snapshot.val()) {
+                let mins = snapshot.val()[key].min
+                let hour = snapshot.val()[key].hour
+                if (hour == selectedHour) {
+                    if(item == mins) {
+                        return true 
+                    }
+                } else {
+                    return false
+                }
+
+            }
+        })
+        // hours.map(hour => {
+        //     Number(hour)
+        //     Number(selectedHour)
+        //     if( hour === selectedHour) {
+        //         mins.map(min => {
+        //             console.log(typeof(min));
+        //             console.log(typeof(item));
+        //             if(min == item) {
+        //                 console.log(true);
+        //             }
+        //         })
+        //     } else {
+        //         console.log(false);
+        //     }
+        // })
+    }
+
+
+    const addToOrder = () => {
+
+        if(authentication && clients) {
+            for (let key in clients) {
+             if(authentication.uid === clients[key].clientID) {
+                const currentUser = clients[key];
+                database.ref('Orders/' + workPlace + '/' + workMonth + '/' + workDay).push({
+                    hour: selectedHour,
+                    min: selectedMin,
+                    userId:  currentUser.clientID,
+                    userName: currentUser.clientName,
+                    userPhone: currentUser.clientphone,
+                    userEmail: currentUser.clientEmail,
+                    order: orders,
+                })
+             }
+            }
+        }
+    }
+
 
     return(
         <OverLay onClick={CloseModal} id='OverLay'>
@@ -54,14 +113,19 @@ export const ChooseTimeModal = ({setTimeModal, workdays, useGetMonth, month, use
                     </Select>
                 <Label htmlFor="hour">Час</Label>
                     <Select onChange={useGetMin} name="hour" id="hour">
-                    {hours ? Object.keys(hours.hours).map((item, index) => (
-                            <option key={index} value={index}>{item}</option>
-                    )) : <option>Choose day</option>}
+                    {hours ? hours.hours.map((item,index) => (
+                        <option key={index} value={item.hour}>{item.hour}</option>
+                        )) : <option>Choose day</option>}
+                    
                     </Select>
                 <Label htmlFor="min">Минуты</Label>
-                    <Select name="min" id="min">
-                    { console.log(min)}
+                    <Select onChange={useSetMin} name="min" id="min">
+                    {min ? min.hours.filter(item => item.hour == selectedHour)[0].min.map((item, index ) => (
+                        <option disabled={console.log(Disabled(item))} key={index} value={item}>{item}</option>
+                        
+                    )) : <option>Choose hour</option> }
                     </Select>
+                    <Button disabled={!(month && days && hours && min)} onClick={() => {addToOrder()}} >Выбрать</Button>
             </Modal>
         </OverLay>
     )

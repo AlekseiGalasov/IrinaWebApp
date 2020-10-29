@@ -52,11 +52,12 @@ const Item = styled.li`
     }
 `
 
-const Button = styled.div`
+export const Button = styled.div`
             width: 150px;
             height: 40px;
             background-color: rgb(186, 191, 16);
             border: 2px solid rgb(186, 191, 16);
+            margin: ${props => props.addWorkDay ? '15px 0' : '0'};
             text-align: center;
             cursor: pointer;
             transition: 0.3s;
